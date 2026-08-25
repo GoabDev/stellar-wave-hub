@@ -116,6 +116,18 @@ create table if not exists public.financial_snapshots (
 create index if not exists financial_snapshots_project_id_idx on public.financial_snapshots (project_id);
 create index if not exists financial_snapshots_created_at_idx on public.financial_snapshots (created_at desc);
 
+create table if not exists public.promo_codes (
+  id bigserial primary key,
+  code text not null,
+  percent_off integer not null check (percent_off > 0 and percent_off <= 100),
+  max_uses integer check (max_uses is null or max_uses > 0),
+  uses integer not null default 0,
+  expires_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+create unique index if not exists promo_codes_code_key on public.promo_codes (upper(code));
+
 -- Seed counters used by nextId()
 insert into public.counters (name, value)
 values
