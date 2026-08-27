@@ -98,7 +98,7 @@ export async function POST(request: Request) {
 
     const basePrice = Number(base_price) || 100;
     let finalPrice = basePrice;
-    let appliedPromo: { id: number; code: string; percent_off: number; uses: number } | null = null;
+    let appliedPromo: { code: string; percent_off: number; uses: number } | null = null;
 
     if (promo_code && typeof promo_code === "string" && promo_code.trim()) {
       const code = promo_code.trim().toUpperCase();
@@ -133,11 +133,11 @@ export async function POST(request: Request) {
       finalPrice = Math.max(0, basePrice - (basePrice * percentOff) / 100);
       appliedPromo = promo;
 
-      // Increment promo code usage
+      // Increment promo code usage by code
       await supabase
         .from("promo_codes")
         .update({ uses: (promo.uses ?? 0) + 1 })
-        .eq("id", promo.id);
+        .ilike("code", promo.code);
     }
 
     // Activate featured spotlight for project

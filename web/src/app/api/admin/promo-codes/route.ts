@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 
     const { data: existing } = await supabase
       .from("promo_codes")
-      .select("id")
+      .select("*")
       .ilike("code", formattedCode)
       .maybeSingle();
 
@@ -98,17 +98,24 @@ export async function DELETE(request: Request) {
   try {
     const url = new URL(request.url);
     const id = url.searchParams.get("id");
+    const code = url.searchParams.get("code");
 
-    if (!id || isNaN(Number(id))) {
-      return Response.json({ error: "Valid promo code ID is required" }, { status: 400 });
+    if (!id && !code) {
+      return Response.json({ error: "Promo code ID or code is required" }, { status: 400 });
     }
 
     const supabase = getSupabase();
-    const { error } = await supabase
-      .from("promo_codes")
-      .delete()
-      .eq("id", Number(id));
+    let query = supabase.from("promo_codes").delete();
 
+    if (code) {
+      query = query.ilike("code", code.trim());
+    } else if (id && !isNaN(Number(id))) {
+      query = query.eq("id", Number(id));
+    } else if (id) {
+      query = query.ilike("code", id.trim());
+    }
+
+    const { error } = await query;
     if (error) throw error;
 
     return Response.json({ success: true });
