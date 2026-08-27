@@ -73,7 +73,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { project_id, promo_code, base_price } = body || {};
+    const { project_id, promo_code, base_price, tx_hash, duration_days } = body || {};
 
     if (!project_id || isNaN(Number(project_id))) {
       return Response.json({ error: "Project ID is required" }, { status: 400 });
@@ -141,13 +141,21 @@ export async function POST(request: Request) {
     }
 
     // Activate featured spotlight for project
-    const now = new Date().toISOString();
+    const now = new Date();
+    const days = Number(duration_days) > 0 ? Number(duration_days) : 30;
+    const expiresAt = new Date(now.getTime() + days * 86400 * 1000).toISOString();
+    const txHash = tx_hash ? String(tx_hash).trim() : `spotlight_tx_${Date.now()}`;
+
     const { error: updateError } = await supabase
       .from("projects")
       .update({
         featured: 1,
         status: "featured",
-        updated_at: now,
+        featured_tx_hash: txHash,
+        featured_amount: finalPrice,
+        featured_expires_at: expiresAt,
+        promo_code: appliedPromo ? appliedPromo.code : null,
+        updated_at: now.toISOString(),
       })
       .eq("numericId", Number(project_id));
 
@@ -157,8 +165,10 @@ export async function POST(request: Request) {
       success: true,
       project_id: Number(project_id),
       featured: 1,
+      featured_tx_hash: txHash,
       base_price: basePrice,
       final_price: finalPrice,
+      expires_at: expiresAt,
       promo_code: appliedPromo ? appliedPromo.code : null,
     });
   } catch (err) {
