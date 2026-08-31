@@ -75,6 +75,16 @@ ledger `3829993` at `2026-07-27T16:09:15Z`.
 - **Research images:** the public mobile UI and CI/CD screenshots published in
   the project repository.
 
+## Submission Confirmed
+
+- **Hub project ID:** `122`
+- **Hub slug:** `agentpay`
+- **Submission status:** `submitted` (awaiting administrator review)
+- **Network correction:** changed from the form's default `mainnet` to
+  `testnet` so it matches the verified AgentPay contracts.
+- **Submission evidence:** the Hub record contains the Agent Registry Testnet
+  contract and two research images.
+
 ## Sources
 
 1. [Drips Stellar Wave repository catalog](https://www.drips.network/wave/stellar/repos)
