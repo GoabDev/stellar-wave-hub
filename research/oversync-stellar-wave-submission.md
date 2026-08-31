@@ -81,6 +81,13 @@ Horizon reports both transactions as successful and each contains an
 - **Research images:** the repository logo plus a screenshot of the testnet-only
   bridge interface or the public contract explorer.
 
+## Hub Submission Confirmation
+
+- **Hub project ID:** `123`
+- **Status:** `submitted` (awaiting Hub administrator review)
+- **Submitted network:** `Testnet`
+- **Uploaded research image:** https://dlwcywvybsedgmcggmjn.supabase.co/storage/v1/object/public/research-images/72/1788159603769-n8d4ry.png
+
 ## Sources
 
 1. [Drips Stellar Wave repository catalog](https://www.drips.network/wave/stellar/repos)
