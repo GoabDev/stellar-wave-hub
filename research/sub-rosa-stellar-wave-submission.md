@@ -65,8 +65,17 @@ pilots and completed lifecycle proofs.
 - **Website:** https://www.sub-rosa.online/
 - **GitHub repository:** https://github.com/karagozemin/Sub-Rosa
 - **Logo:** https://raw.githubusercontent.com/karagozemin/Sub-Rosa/main/assets/sub-rosa-readme.png
-- **Research images:** capture the project README/architecture and the mainnet
-  Stellar Expert contract view during authenticated Hub submission.
+- **Research images:** Sub Rosa hosted-app view and the documented testnet
+  lifecycle receipt.
+
+## Submission Confirmed
+
+- **Hub project ID:** `121`
+- **Hub slug:** `sub-rosa`
+- **Submission status:** `submitted` (awaiting administrator review)
+- **Submitted:** `2026-08-31T05:59:48.588Z`
+- **Submission evidence:** the Hub record contains the mainnet contract ID and
+  two supporting research images.
 
 ## Sources
 
